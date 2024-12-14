@@ -13,6 +13,7 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 300, ...props }) => {
     const loadOption = (value) => {
       setOptions([])
       setFetching(true)
+      // eslint-disable-next-line react/prop-types
       fetchOptions(value, props.currentMembers).then(newOption => {
         setOptions(newOption)
         setFetching(false)
@@ -20,7 +21,8 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 300, ...props }) => {
     }
 
     return debounce(loadOption, debounceTimeout)
-  }, [debounceTimeout, fetchOptions])
+  // eslint-disable-next-line react/prop-types
+  }, [debounceTimeout, fetchOptions, props.currentMembers])
 
   return (
     <Select
@@ -33,7 +35,12 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 300, ...props }) => {
       {
         options.map(option => (
           <Select.Option key={option?.value} value={option?.value} title={option?.label}>
-            <Avatar size={"small"} src={option?.photoURL}>{option?.photoURL ? '' : option?.label?.charAt(0)?.toUpperCase()}</Avatar>
+            <Avatar
+              size={"small"}
+              src={option?.photoURL}
+            >
+              {option?.photoURL ? '' : option?.label?.charAt(0)?.toUpperCase()}
+            </Avatar>
             {`${option.label}`}
           </Select.Option>
         ))
@@ -60,7 +67,6 @@ const fetchUserList = async (search, currentMembers) => {
 
 const InviteMemberModal = () => {
   const [value, setValue] = useState('')
-  console.log('🚀 ~ InviteMemberModal ~ value:', value)
   const { isInviteMemberVisible, setIsInviteMemberVisible, selectedRoomId, selectedRoom } = useContext(AppContext)
   const [form] = Form.useForm()
 

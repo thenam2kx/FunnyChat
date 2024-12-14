@@ -1,5 +1,6 @@
 import { Typography } from "antd"
 import Avatar from "antd/es/avatar/avatar"
+import { formatRelative } from "date-fns"
 import styled from "styled-components"
 
 const WrapperStyle = styled.div`
@@ -20,15 +21,32 @@ const WrapperStyle = styled.div`
   }
 
 `
+const formatDate = (seconds) => {
+  let format = ''
+  if (seconds) {
+    format = formatRelative(new Date(seconds * 1000), new Date())
+    format = format.charAt(0).toUpperCase() + format.slice(1)
+  }
+  return format
+}
 
 // eslint-disable-next-line react/prop-types
 const Message = ({ text, displayName, createAt, photoURL }) => {
+
   return (
     <WrapperStyle>
       <div>
-        <Avatar size={"small"} src={photoURL}>a</Avatar>
+        <Avatar size={"small"} src={photoURL}>
+          {
+            // eslint-disable-next-line react/prop-types
+            photoURL ? '' : displayName?.charAt(0)?.toUpperCase()
+          }
+        </Avatar>
         <Typography.Text className="author">{displayName}</Typography.Text>
-        <Typography.Text className="date">{createAt}</Typography.Text>
+        <Typography.Text className="date">{
+          // eslint-disable-next-line react/prop-types
+          formatDate(createAt?.seconds)
+        }</Typography.Text>
       </div>
       <div>
         <Typography.Text className="content">{text}</Typography.Text>
