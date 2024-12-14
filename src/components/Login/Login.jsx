@@ -3,12 +3,23 @@ import { Typography } from "antd"
 import { Button } from "antd"
 const { Title } = Typography
 import firebase, { auth } from '../firebase/config'
+import { addDocument } from '../firebase/service'
 
 const fbProvider = new firebase.auth.FacebookAuthProvider();
 
 const Login = () => {
   const handleLogin = async () => {
-    await auth.signInWithPopup(fbProvider)
+    const { additionalUserInfo, user } = await auth.signInWithPopup(fbProvider)
+
+    if (additionalUserInfo?.isNewUser) {
+      addDocument('users', {
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        uid: user.uid,
+        providerId: additionalUserInfo.providerId,
+      })
+    }
   }
 
   return (

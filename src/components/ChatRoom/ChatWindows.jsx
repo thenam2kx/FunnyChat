@@ -38,13 +38,13 @@ const ContentStyle = styled.div`
   height: calc(100vh - 58px);
   display: flex;
   flex-direction: column;
-  padding: 11px;
+  padding: 0 11px;
   justify-content: flex-end;
 `
 
 const MessageListStyle = styled.div`
   max-height: 100%;
-  overflow-y:auto
+  overflow-y:auto;
 `
 
 const WrapperStyle = styled.div`
@@ -58,6 +58,7 @@ const FormStyle = styled(Form)`
   padding: 2px 2px 2px 0;
   border: 1px solid rgba(230, 230, 230);
   border-radius: 2px;
+  margin-bottom: 10px;
 
   .ant-form-item {
     flex: 1;
