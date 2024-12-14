@@ -28,8 +28,11 @@ const LinkStyled = styled(Typography.Link)`
 `
 
 const RoomList = () => {
-  const { rooms } = useContext(AppContext)
-  console.log('🚀 ~ RoomList ~ rooms:', rooms)
+  const { rooms, setIsAddRoomVisible } = useContext(AppContext)
+
+  const handleAddRoom = () => {
+    setIsAddRoomVisible(true)
+  }
 
   return (
     <div>
@@ -38,7 +41,14 @@ const RoomList = () => {
           {
             rooms.map(room => (<LinkStyled key={room.id}>{room.name}</LinkStyled>))
           }
-          <Button type="text" icon={<PlusSquareOutlined />} className="addRoom">Thêm phòng</Button>
+          <Button
+            type="text"
+            icon={<PlusSquareOutlined />}
+            className="addRoom"
+            onClick={handleAddRoom}
+          >
+            Thêm phòng
+          </Button>
         </PanelStyle>
       </Collapse>
     </div>

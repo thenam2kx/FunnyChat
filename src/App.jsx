@@ -3,6 +3,7 @@ import Login from './components/Login/Login'
 import ChatRoom from './components/ChatRoom/ChatRoom'
 import AuthProvider from './Context/AuthProvider'
 import AppProvider from './Context/AppProvider'
+import AddRoomModal from './components/Modals/AddRoomModal'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
             <Route element={<ChatRoom />} path='/' />
             <Route element={<Login />} path='/login' />
           </Routes>
+          <AddRoomModal />
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>
