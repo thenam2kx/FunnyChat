@@ -11,12 +11,21 @@ const AddRoomModal = () => {
   const [form] = Form.useForm()
 
   const handleOk = () => {
+    // add rooms
     addDocument('rooms', { ...form.getFieldValue(), members: [user?.uid] })
+
+    // cancel modal
     setIsAddRoomVisible(false)
+
+    // reset form
+    form.resetFields()
   }
 
   const handleCancel = () => {
+    // cancel modal
     setIsAddRoomVisible(false)
+    // reset form
+    form.resetFields()
   }
 
 

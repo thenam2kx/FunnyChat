@@ -14,14 +14,13 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
-      console.log(user)
       if (user) {
         const { displayName, email, uid, photoURL } = user
         setUser({ displayName, email, uid, photoURL })
         setIsLoading(false)
         navigate('/')
       } else {
-        setUser(null)
+        // setUser(null)
         setIsLoading(false)
         navigate('/login')
       }

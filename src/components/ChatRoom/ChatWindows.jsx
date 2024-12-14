@@ -1,8 +1,11 @@
 import { UserAddOutlined } from "@ant-design/icons"
 import { Avatar, Button, Input, Tooltip } from "antd"
+import { Alert } from "antd"
 import { Form } from "antd"
 import styled from "styled-components"
 import Message from "./Message"
+import { useContext } from "react"
+import { AppContext } from "~/Context/AppProvider"
 
 const HeaderStyle = styled.div`
   display: flex;
@@ -67,45 +70,50 @@ const FormStyle = styled(Form)`
 `
 
 const ChatWindows = () => {
+  const { selectedRoom, members, setIsInviteMemberVisible } = useContext(AppContext)
 
   return (
     <WrapperStyle>
-      <HeaderStyle>
-        <div className="header__infor">
-          <p className="header__title">Room 1</p>
-          <span className="header__desc">day la room 1</span>
-        </div>
-        <ButtonGroupStyle>
-          <Button type="text" icon={<UserAddOutlined />}>Mời</Button>
-          <Avatar.Group size={"small"} max={2}>
-            <Tooltip title='A'>
-              <Avatar />
-            </Tooltip>
-            <Tooltip title='A'>
-              <Avatar />
-            </Tooltip>
-            <Tooltip title='A'>
-              <Avatar />
-            </Tooltip>
-          </Avatar.Group>
-        </ButtonGroupStyle>
-      </HeaderStyle>
+      {
+        selectedRoom?.id ? (
+          <>
+            <HeaderStyle>
+              <div className="header__infor">
+                <p className="header__title">{selectedRoom?.name}</p>
+                <span className="header__desc">{selectedRoom?.desc}</span>
+              </div>
+              <ButtonGroupStyle>
+                <Button type="text" icon={<UserAddOutlined />} onClick={() => setIsInviteMemberVisible(true)}>Mời</Button>
+                <Avatar.Group size={"small"} max={2}>
+                  {
+                    members.map(member => (
+                      <Tooltip title={member?.displayName} key={member?.id}>
+                        <Avatar src={member?.photoURL}>{member?.photoURL ? '' : member?.displayName?.charAt(0)?.toUpperCase()}</Avatar>
+                      </Tooltip>
+                    ))
+                  }
+                </Avatar.Group>
+              </ButtonGroupStyle>
+            </HeaderStyle>
 
-      <ContentStyle>
-        <MessageListStyle>
-          <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
-          <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
-          <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
-          <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
-          <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
-        </MessageListStyle>
-        <FormStyle>
-          <Form.Item>
-            <Input placeholder="Tin nhắn" autoComplete="off" variant="borderless"/>
-          </Form.Item>
-          <Button type="primary" htmlType="submit">Gửi</Button>
-        </FormStyle>
-      </ContentStyle>
+            <ContentStyle>
+              <MessageListStyle>
+                <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
+                <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
+                <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
+                <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
+                <Message text={'test'} photoURL={null} displayName={'The Nam'} createAt={'122232'} />
+              </MessageListStyle>
+              <FormStyle>
+                <Form.Item>
+                  <Input placeholder="Tin nhắn" autoComplete="off" variant="borderless"/>
+                </Form.Item>
+                <Button type="primary" htmlType="submit">Gửi</Button>
+              </FormStyle>
+            </ContentStyle>
+          </>
+        ) : <Alert message="Chọn phòng để trò chuyện" type="info" showIcon style={{ margin: 5 }} closable />
+      }
     </WrapperStyle>
   )
 }
