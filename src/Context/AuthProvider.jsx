@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { auth } from "~/components/firebase/config"
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext({ user: null })
+export const AuthContext = createContext()
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribed()
     }
-  }, [navigate]) // Đã loại bỏ navigate khỏi mảng dependencies
+  }, [navigate])
 
   if (isLoading) {
     return <Spin />
