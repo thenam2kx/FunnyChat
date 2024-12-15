@@ -34,12 +34,15 @@ const RoomList = () => {
     setIsAddRoomVisible(true)
   }
 
+  
+
+
   return (
     <div>
       <Collapse ghost defaultActiveKey={[1]}>
         <PanelStyle header='Danh sách các phòng' key={1}>
           {
-            rooms.map(room => (
+            rooms && rooms.length > 0 && rooms.map(room => (
               <LinkStyled key={room.id} onClick={() => setSelectedRoomId(room.id)}>{room.name}</LinkStyled>
             ))
           }
