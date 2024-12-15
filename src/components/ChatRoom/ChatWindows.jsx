@@ -87,7 +87,7 @@ const ChatWindows = () => {
       displayName
     })
 
-    form.resetFields(['message'])
+    form.resetFields()
   }
 
   const handleInputChange = (e) => {

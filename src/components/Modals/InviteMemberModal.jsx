@@ -4,6 +4,7 @@ import { AppContext } from "~/Context/AppProvider"
 import { debounce } from "lodash"
 import { db } from "../firebase/config"
 
+
 // eslint-disable-next-line react/prop-types
 const DebounceSelect = ({ fetchOptions, debounceTimeout = 300, ...props }) => {
   const [fetching, setFetching] = useState(false)
@@ -33,7 +34,7 @@ const DebounceSelect = ({ fetchOptions, debounceTimeout = 300, ...props }) => {
       {...props}
     >
       {
-        options.map(option => (
+        options && options.length > 0 && options.map(option => (
           <Select.Option key={option?.value} value={option?.value} title={option?.label}>
             <Avatar
               size={"small"}
@@ -66,16 +67,16 @@ const fetchUserList = async (search, currentMembers) => {
 }
 
 const InviteMemberModal = () => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState([])
   const { isInviteMemberVisible, setIsInviteMemberVisible, selectedRoomId, selectedRoom } = useContext(AppContext)
   const [form] = Form.useForm()
 
 
 
-  const handleOk = () => {
+  const handleOk = async () => {
 
     const roomRef = db.collection('rooms').doc(selectedRoomId)
-    roomRef.update({
+    await roomRef.update({
       members: [...selectedRoom.members, ...value.map(v => v.value)]
     })
 
@@ -107,7 +108,7 @@ const InviteMemberModal = () => {
             value={value}
             placeholder='Nhập tên thành viên'
             fetchOptions={fetchUserList}
-            onChange={newValue => setValue(newValue)}
+            onChange={newValue => setValue(newValue || [])}
             style={{ width: '100%' }}
             currentMembers={selectedRoom.members}
           />
