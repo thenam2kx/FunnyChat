@@ -5,7 +5,7 @@ import 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBvhmOYtjqWxQ_Kxxe7uRQ_r0XlfFdpniE",
-  authDomain: "funny-chat-3aa3d.firebaseapp.com",
+  authDomain: "https://funny-chat.vercel.app",
   projectId: "funny-chat-3aa3d",
   storageBucket: "funny-chat-3aa3d.firebasestorage.app",
   messagingSenderId: "533452835209",
